@@ -149,3 +149,19 @@ const actors = [{
 console.log(bars);
 console.log(events);
 console.log(actors);
+
+function sumBookingPrice(time,people, pricePerHour, pricePerPerson){
+  var bookerprice =  time*pricePerHour + people*pricePerPerson;
+  if(people >= 10 && people < 20) bookerprice *0.9;
+  if(people >= 20 && people < 60) bookerprice *0.7;
+  if(people >= 60) bookerprice *0.5;
+  return bookerprice;
+}
+
+events.forEach(event => {bars.forEach(bar=>{
+  if(event.barId == bar.id){
+    event.price = sumBookingPrice(event.time,event.persons,bar.pricePerHour,bar.pricePerPerson)
+  }
+})
+  
+});
