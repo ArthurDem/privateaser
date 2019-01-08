@@ -146,22 +146,21 @@ const actors = [{
   }]
 }];
 
-console.log(bars);
-console.log(events);
-console.log(actors);
-
 function sumBookingPrice(time,people, pricePerHour, pricePerPerson){
-  var bookerprice =  time*pricePerHour + people*pricePerPerson;
-  if(people >= 10 && people < 20) bookerprice *0.9;
-  if(people >= 20 && people < 60) bookerprice *0.7;
-  if(people >= 60) bookerprice *0.5;
-  return bookerprice;
+  var newPricePerPerson;
+  if(people >= 10 && people < 20) newPricePerPerson  = pricePerPerson * 0.9;
+  if(people >= 20 && people < 60) newPricePerPerson  = pricePerPerson * 0.7;
+  if(people >= 60) newPricePerPerson  = pricePerPerson * 0.5;
+  return time*pricePerHour + people*newPricePerPerson;
 }
 
 events.forEach(event => {bars.forEach(bar=>{
   if(event.barId == bar.id){
-    event.price = sumBookingPrice(event.time,event.persons,bar.pricePerHour,bar.pricePerPerson)
+    event.price = sumBookingPrice(event.time,event.persons,bar.pricePerHour,bar.pricePerPerson);
   }
 })
   
 });
+console.log(bars);
+console.log(events);
+console.log(actors);
