@@ -162,11 +162,38 @@ events.forEach(event => {bars.forEach(bar=>{
     event.commission.insurance = com / 2;
     event.commission.treasury = event.persons;
     event.commission.privateaser = com - (event.commission.insurance + event.commission.treasury);
-
+    if(event.options.deductibleReduction){
+      event.price += event.persons;
+    }
   }
 })
 });
 
+ actors.forEach(actor => {events.forEach(event =>{
+  if(actor.eventId == event.id){
+    actor.payment.forEach(paiment => {
+      switch(paiment.who){
+        case 'booker':
+        paiment.amount = event.price;
+        break;
+        case 'bar':
+        paiment.amount = event.price * 0.7;
+        break;
+        case 'insurance':
+        paiment.amount = event.commission.insurance;
+        break;
+        case 'treasury':
+        paiment.amount = event.commission.treasury;
+        break;
+        case 'privateaser':
+        paiment.amount = event.commission.privateaser + event.persons;
+        break;
+      }
+    })
+   }
+ })
+
+ })
 console.log(bars);
 console.log(events);
 console.log(actors);
